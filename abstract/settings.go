@@ -14,13 +14,15 @@ type Settings struct {
 	DebugDisabled bool `yaml:"noDebug"`
 }
 
-func LoadSettings() Settings {
+func LoadSettings()  (Settings, error) {
 	var settings Settings = Settings{}
-	if file, err := os.Open(util.GetCurrentPath() + "/.settings"); err == nil {
-		if bytes, err := ioutil.ReadAll(file); err == nil {
-			if err = yaml.Unmarshal(bytes, &settings); err == nil {
-				return settings
-			} else {
+	var err error
+	var file *os.File
+	if file, err = os.Open(util.GetCurrentPath() + "/.settings"); err == nil {
+		var bytes []byte = make([]byte, 0)
+		if bytes, err = ioutil.ReadAll(file); err == nil {
+			err = DeserializeSettings(bytes, &settings)
+			if err != nil {
 				logger.Error(err)
 			}
 		} else {
@@ -29,7 +31,17 @@ func LoadSettings() Settings {
 	} else {
 		logger.Error(err)
 	}
-	return settings
+	return settings, err
+}
+
+func DeserializeSettings(bytes []byte, settings *Settings) (error) {
+	var err error
+	if err = yaml.Unmarshal(bytes, settings); err == nil {
+		return nil
+	} else {
+		logger.Error(err)
+		return err
+	}
 }
 
 func SaveSettings(settings Settings) error {
