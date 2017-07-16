@@ -2,6 +2,7 @@
 
 Simple tool useful to define smart architectures on Amazon Web Service.
 
+
 ### Objectives
 
 Objectives of project are :
@@ -11,9 +12,11 @@ Objectives of project are :
 * Integrate multiple services
 * Provide an AWS client agnostic application
 
+
 ### Pre-requisites
 
 N.A.
+
 
 ### Install client
 
@@ -24,6 +27,7 @@ To install client use following command :
     go get -u github.com/hellgate75/aws-architect
     dep ensure -update
 ```
+
 
 ### Run command
 
@@ -38,6 +42,16 @@ With this command you will have the list of available sub-commands. In case you 
  ```bash
      aws-architect help <sub-command> 
  ```
+
+
+### Issues
+
+We track and improve code accordingly to plan and issues you create on project issues tracker at :
+[Issues Tracker](https://github.com/hellgate75/aws-architect/issues)
+
+
+Thanks you for your advice us on application bugs.
+
 
 ### License
 
