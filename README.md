@@ -4,14 +4,32 @@
 Simple tool useful to define smart architectures on Amazon Web Service.
 
 
+### Why prefer this tool to AWS client?
+
+Answer is very simple, we prefer this tool to AWS client because :
+
+* We do not want to maintain aws client, hiss versioning or BOTO libraries, and updating this project you will update to latest aws sdk
+* We want an an accelerator do deploy faster AWS infrastructure.
+* We do not want do strive our mind with aws client complex api
+* We want ready build-in procedures to access services
+* We want a tool easy to integrate with new features
+* We are providing a plugin interface to develop different scenarios
+* We want integrated AWS Architect features with AWS Developer operations
+* We want to access AWS with simplified guided procedures and batch YAML scripts to deploy multiple complex architectures cross-region, maintaining versioning of cloud artifacts and stacks
+
+
 ### Objectives
 
-Objectives of project are :
+Project objectives are :
 
+* Provide an AWS client agnostic application
 * Define an Amazon Web Services accelerator
 * Support complex CloudFormation operations
-* Integrate multiple services
-* Provide an AWS client agnostic application
+* Integrate multiple AWS services
+* Flatten distance between DevOps and CloudFormation
+* Create new operative system working in both DevOps, SysOps, and Architectures
+* YAML batch language for architecture and multi-region stacks
+* Plugin interface to fast develop new features or simply pull from repository new features, without any integration effort
 
 
 ### Pre-requisites
@@ -37,7 +55,7 @@ aws_secret_access_key = ANOTHER_AWS_SECRET_ACCESS_KEY
 
 ```
 
-Each section (e.g., [default], [project1]), represents a separate credential profile. Profiles can be referenced from a SDK configuration file, or when you are instantiating a client, using the profile option:
+Each section (e.g., [default], [project1]), represents a separate credential profile. Profiles can be referenced from a SDK configuration flag, or when you are instantiating a client, using the profile option:
 
 ```bash
 
