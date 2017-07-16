@@ -1,4 +1,5 @@
-# aws-architect
+<p align="center"><img src="https://travis-ci.org/hellgate75/aws-architect.svg?branch=master" alt="trevis-ci" width="98" height="20" /></p><br/>
+# AWS Architect swiss-knife
 
 Simple tool useful to define smart architectures on Amazon Web Service.
 
