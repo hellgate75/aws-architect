@@ -1,10 +1,16 @@
-memo = "425e9079944dbabda6bfc49eda3968149d633c617b230f16de7e195f2f67b498"
+memo = "091b6ec704ce41497e09f9aa0c4e885b3f158923b6410293388b0ba394d695cb"
 
 [[projects]]
   name = "github.com/aws/aws-sdk-go"
   packages = ["aws","aws/awserr","aws/awsutil","aws/client","aws/client/metadata","aws/corehandlers","aws/credentials","aws/credentials/ec2rolecreds","aws/credentials/endpointcreds","aws/credentials/stscreds","aws/defaults","aws/ec2metadata","aws/endpoints","aws/request","aws/session","aws/signer/v4","internal/shareddefaults","private/protocol","private/protocol/query","private/protocol/query/queryutil","private/protocol/rest","private/protocol/restxml","private/protocol/xml/xmlutil","service/s3","service/sts"]
   revision = "b73b028e599fa9176687c70b8f9cafbe57c27d20"
   version = "v1.10.11"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/blakesmith/ar"
+  packages = ["."]
+  revision = "8bd4349a67f2533b078dbc524689d15dba0f4659"
 
 [[projects]]
   name = "github.com/davecgh/go-spew"
