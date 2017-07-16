@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func DefineUsage(command string, parameters []abstract.Parameter) (string) {
+func DefineUsage(command string, description string, parameters []abstract.Parameter) (string) {
 	var usage, args string
 	usage=command + " "
 	for i := 0; i < len(parameters); i++ {
@@ -18,6 +18,6 @@ func DefineUsage(command string, parameters []abstract.Parameter) (string) {
 			args += fmt.Sprintf("-%s %s\t\t\t%s [Optional]\n", param.Name, param.SampleValue, param.Description)
 		}
 	}
-	usage += "\nOptions:\n" + args
+	usage += "\nDescription : " + description + "\nOptions:\n" + args
 	return  usage
 }

@@ -99,6 +99,10 @@ func (c *Counter) GetCommand() (string) {
 	return  c.Command
 }
 
+func (c *Counter) GetName() (string) {
+	return  c.Name
+}
+
 func (c *Counter) GetUsage() (string) {
 	return  c.Usage
 }
@@ -137,6 +141,6 @@ func InitCounter() {
 	CounterAction.Name = "Sample File Rows Counter"
 	CounterAction.Command= "count"
 	CounterAction.Description= "Count rows in a File"
-	CounterAction.Usage=helpers.DefineUsage(CounterAction.Command, CounterAction.Parameters)
+	CounterAction.Usage=helpers.DefineUsage(CounterAction.Command, CounterAction.Description, CounterAction.Parameters)
 	abstract.RegisterAction(CounterAction)
 }

@@ -37,7 +37,7 @@ func PrintUsage(command string) () {
 		println("Available commands : ")
 		for i := 0; i < size; i++ {
 			var ops abstract.ActionOps = abstract.ActiveActionRegistry.ElementAt(i)
-			println("\t", ops.GetCommand())
+			println("\t", ops.GetCommand(), "\t", ops.GetName())
 		}
 	}
 }
@@ -95,7 +95,7 @@ func main() {
 			}
 		}(logChannel, currentAction.IsInProgress)
 		response=currentAction.Execute(logChannel)
-		logger.Log(fmt.Sprintf("Execution of command %s complated : %t", currentAction.GetCommand(), response))
+		logger.Log(fmt.Sprintf("Execution of command %s completed : %t", currentAction.GetCommand(), response))
 		logger.Log(fmt.Sprintf("Exit Code : %d", currentAction.GetExitCode()))
 		logger.Log(fmt.Sprintf("Message : %s", currentAction.GetLastMessage()))
 		close(logChannel)

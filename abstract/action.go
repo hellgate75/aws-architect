@@ -53,6 +53,11 @@ type ActionOps interface {
 	*/
 	GetCommand() (string)
 	/*
+	*	GetName method
+	* Return command descriptive name
+	*/
+	GetName() (string)
+	/*
 	*	GetUsage method
 	* Return command usage sample
 	*/
