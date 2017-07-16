@@ -7,15 +7,8 @@ import (
 	"fmt"
 	"os"
 	"bufio"
+	"aws-architect/helpers"
 )
-
-
-//var Counter  = &Action{
-//	Name: "Counter",
-//	Description: "Desciption",
-//	Parameters: []*Parameter{},
-//	Usage: "",
-//}
 
 type Counter struct {
 	abstract.Action
@@ -124,15 +117,17 @@ func (c *Counter) GetLastMessage() (string) {
 func InitCounter() {
 	var parm1 abstract.Parameter = abstract.Parameter{
 		Name: "file",
-		Description: "File Full Path",
+		Description: "Full qualified file path",
 		Mandatory: true,
 		HasValue: true,
+		SampleValue: "file-path",
 	}
 	var parm2 abstract.Parameter = abstract.Parameter{
 		Name: "skip",
-		Description: "Identify number of rows to skip from file top",
+		Description: "Number of row to skip count from file top",
 		Mandatory: false,
 		HasValue: true,
+		SampleValue: "nun-rows",
 	}
 	var Parameters 	[]abstract.Parameter = make([]abstract.Parameter, 0)
 	Parameters = append(Parameters, parm1)
@@ -142,6 +137,6 @@ func InitCounter() {
 	CounterAction.Name = "Sample File Rows Counter"
 	CounterAction.Command= "count"
 	CounterAction.Description= "Count rows in a File"
-	CounterAction.Usage= "count --path <file_path> [--skip n]\nOptions:\n-path file_path\t\tFull qualified file path\n-skip n\t\t\tNumber of row to skip count from file top"
+	CounterAction.Usage=helpers.DefineUsage(CounterAction.Command, CounterAction.Parameters)
 	abstract.RegisterAction(CounterAction)
 }

@@ -8,6 +8,7 @@ type Parameter struct {
 	Description string 	`yaml:"description"`
 	Mandatory		bool 		`yaml:"mandatory"`
 	HasValue		bool 		`yaml:"hasvalue"`
+	SampleValue string 	`yaml:"sample"`
 }
 
 /*
