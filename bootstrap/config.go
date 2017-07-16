@@ -9,6 +9,7 @@ import (
 	"github.com/hellgate75/aws-architect/util"
 	"github.com/hellgate75/aws-architect/log"
 	"fmt"
+	"io/ioutil"
 )
 var logger log.Logger = log.Logger{}
 
@@ -20,6 +21,7 @@ func InitDatabaseConfig(settings *abstract.Settings) {
 			if val, ok := xMap[".settings"]; ok {
 				abstract.DeserializeSettings(val, settings)
 				logger.Log(fmt.Sprintf("Configuration reloaded from file : %s", arFileName))
+				ioutil.WriteFile(util.GetCurrentPath() + "/.settings", val, 0666)
 			}
 		}
 	} else  {
@@ -54,6 +56,7 @@ func LoadFromURL(arFileName string, settings *abstract.Settings) {
 		if val, ok := xMap[".settings"]; ok {
 			abstract.DeserializeSettings(val, settings)
 			logger.Log(fmt.Sprintf("Configuration reloaded from file : %s", arFileName))
+			ioutil.WriteFile(util.GetCurrentPath() + "/.settings", val, 0666)
 		}
 	}
 }
