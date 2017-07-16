@@ -50,7 +50,7 @@ We track and improve code accordingly to plan and issues you create on project i
 [Issues Tracker](https://github.com/hellgate75/aws-architect/issues)
 
 
-Thanks you for your advice us on application bugs.
+Thanks you for advertise us on library bugs or improvements.
 
 
 ### License
