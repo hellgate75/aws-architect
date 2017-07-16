@@ -49,7 +49,7 @@ func init() {
 		NoDebug: bootstrap.Settings.DebugDisabled,
 	}
 	var size int = abstract.GetActionRegistry().Size()
-	logger.Debug(fmt.Sprintf("Available Action %d", size))
+	logger.Debug(fmt.Sprintf("Available Actions : %d", size))
 	var found bool = false
 	if len(os.Args) > 1 {
 		for i := 0; i < size; i++ {

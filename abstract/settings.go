@@ -23,13 +23,13 @@ func LoadSettings()  (Settings, error) {
 		if bytes, err = ioutil.ReadAll(file); err == nil {
 			err = DeserializeSettings(bytes, &settings)
 			if err != nil {
-				logger.Error(err)
+				logger.WarningE(err)
 			}
 		} else {
-			logger.Error(err)
+			logger.WarningE(err)
 		}
 	} else {
-		logger.Error(err)
+		logger.WarningE(err)
 	}
 	return settings, err
 }

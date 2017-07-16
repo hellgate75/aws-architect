@@ -1,30 +1,30 @@
 package util
 
 import (
-	"os"
 	"net/http"
-	"io"
+  "io/ioutil"
+	"github.com/hellgate75/aws-architect/log"
 )
+var logger log.Logger = log.Logger{}
 
 func DownloadFile(filepath string, url string) (err error) {
-
-	// Create the file
-	out, err := os.Create(filepath)
-	if err != nil  {
-		return err
-	}
-	defer out.Close()
 
 	// Get the data
 	resp, err := http.Get(url)
 	if err != nil {
+		logger.WarningE(err)
 		return err
 	}
 	defer resp.Body.Close()
-
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		logger.WarningE(err)
+		return  err
+	}
 	// Writer the body to file
-	_, err = io.Copy(out, resp.Body)
+	err = ioutil.WriteFile(filepath, body, 0666)
 	if err != nil  {
+		logger.WarningE(err)
 		return err
 	}
 
