@@ -15,7 +15,34 @@ Objectives of project are :
 
 ### Pre-requisites
 
-N.A.
+You can use an AWS credentials file to specify your credentials. This is a special, INI-formatted file stored under your HOME directory, and is a good way to manage credentials for your development environment. The file should be placed at `~/.aws/credentials`, where `~` represents your HOME directory.
+
+Using an AWS credentials file offers a few benefits:
+
+    Your projects' credentials are stored outside of your projects, so there is no chance of accidentally committing them into version control.
+    You can define and name multiple sets of credentials in one place.
+    You can easily reuse the same credentials between projects.
+
+The format of the AWS credentials file should look something like the following:
+```bash
+
+[default]
+aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
+aws_secret_access_key = YOUR_AWS_SECRET_ACCESS_KEY
+
+[project1]
+aws_access_key_id = ANOTHER_AWS_ACCESS_KEY_ID
+aws_secret_access_key = ANOTHER_AWS_SECRET_ACCESS_KEY
+
+```
+
+Each section (e.g., [default], [project1]), represents a separate credential profile. Profiles can be referenced from a SDK configuration file, or when you are instantiating a client, using the profile option:
+
+```bash
+
+ -profile <profile_name>
+
+```
 
 
 ### Install client

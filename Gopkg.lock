@@ -1,4 +1,22 @@
-memo = "c39e9119cc91080f9178c39214d6ca06156205351dec2523319554ee3669537e"
+memo = "2ea61859ee061d5954c255ae88520ec194195d4e1ee033711ac6c989b5bf4b0d"
+
+[[projects]]
+  name = "github.com/aws/aws-sdk-go"
+  packages = ["aws","aws/awserr","aws/awsutil","aws/client","aws/client/metadata","aws/corehandlers","aws/credentials","aws/credentials/ec2rolecreds","aws/credentials/endpointcreds","aws/credentials/stscreds","aws/defaults","aws/ec2metadata","aws/endpoints","aws/request","aws/session","aws/signer/v4","internal/shareddefaults","private/protocol","private/protocol/query","private/protocol/query/queryutil","private/protocol/rest","private/protocol/restxml","private/protocol/xml/xmlutil","service/s3","service/sts"]
+  revision = "b73b028e599fa9176687c70b8f9cafbe57c27d20"
+  version = "v1.10.11"
+
+[[projects]]
+  name = "github.com/go-ini/ini"
+  packages = ["."]
+  revision = "d3de07a94d22b4a0972deb4b96d790c2c0ce8333"
+  version = "v1.28.0"
+
+[[projects]]
+  name = "github.com/jmespath/go-jmespath"
+  packages = ["."]
+  revision = "3433f3ea46d9f8019119e7dd41274e112a2359a9"
+  version = "0.2.2"
 
 [[projects]]
   branch = "v2"
