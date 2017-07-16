@@ -1,8 +1,8 @@
 package actions
 
 import (
-	"aws-architect/abstract"
-	"aws-architect/helpers"
+	"github.com/hellgate75/aws-architect/abstract"
+	"github.com/hellgate75/aws-architect/helpers"
 	"bufio"
 	"flag"
 	"fmt"

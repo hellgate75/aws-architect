@@ -1,8 +1,8 @@
 package abstract
 
 import (
-	"aws-architect/log"
-	"aws-architect/util"
+	"github.com/hellgate75/aws-architect/log"
+	"github.com/hellgate75/aws-architect/util"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"

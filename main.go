@@ -1,9 +1,9 @@
 package main
 
 import (
-	"aws-architect/abstract"
-	"aws-architect/bootstrap"
-	"aws-architect/log"
+	"github.com/hellgate75/aws-architect/abstract"
+	"github.com/hellgate75/aws-architect/bootstrap"
+	"github.com/hellgate75/aws-architect/log"
 	"fmt"
 	"os"
 	"strings"

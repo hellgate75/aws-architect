@@ -1,7 +1,7 @@
 package helpers
 
 import (
-	"aws-architect/abstract"
+	"github.com/hellgate75/aws-architect/abstract"
 	"fmt"
 )
 

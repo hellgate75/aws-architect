@@ -1,8 +1,8 @@
 package bootstrap
 
 import (
-	"aws-architect/abstract"
-	"aws-architect/actions"
+	"github.com/hellgate75/aws-architect/abstract"
+	"github.com/hellgate75/aws-architect/actions"
 )
 
 var Settings abstract.Settings

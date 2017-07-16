@@ -1,9 +1,9 @@
 package actions
 
 import (
-	"aws-architect/abstract"
-	"aws-architect/aws"
-	"aws-architect/helpers"
+	"github.com/hellgate75/aws-architect/abstract"
+	"github.com/hellgate75/aws-architect/aws"
+	"github.com/hellgate75/aws-architect/helpers"
 	"flag"
 	"fmt"
 	"time"
