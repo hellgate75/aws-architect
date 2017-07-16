@@ -25,8 +25,8 @@ jobs:
        - go fmt .
        - gofmt -e -s -w .
        - dep ensure -update -v
-       - travis_wait 20 go test -p 10 -timeout 20m -v -cover -covermode atomic ./test/...
-       - go build -buildmode exe -pkgdir ./vendor .
+       - ls -latr && travis_wait 20 go test -p 10 -timeout 20m -v -cover -covermode atomic ./test/...
+       - ls -latr && go build -buildmode exe -pkgdir ./vendor .
     - stage: windows
       go: 1.8.1
       env:
