@@ -9,14 +9,14 @@ notifications:
 branches:
   only:
     - master
+os: linux
+dist: precise
 jobs:
   include:
-    - stage: linux
+    - stage: stable
       go: 1.8.1
       env:
         - DEPTESTBYPASS501=1
-      os: linux
-      dist: precise
       install:
        - go get -u github.com/golang/dep/cmd/dep
        - go get -u github.com/golang/go/src/cmd/gofmt
@@ -25,13 +25,12 @@ jobs:
        - go fmt .
        - gofmt -e -s -w .
        - dep ensure -update -v
-       - ls -latr && travis_wait 20 go test -p 10 -timeout 20m -v -cover -covermode atomic ./test/...
-       - ls -latr && go build -buildmode exe -pkgdir ./vendor .
-    - stage: windows
-      go: 1.8.1
+       - travis_wait 20 go test -p 10 -timeout 20m -v -cover -covermode atomic ./test/...
+       - go build -buildmode exe -pkgdir ./vendor .
+    - stage: latest
+      go: 1.8.3
       env:
         - DEPTESTBYPASS501=1
-      os: windows
       install:
        - go get -u github.com/golang/dep/cmd/dep
        - go get -u github.com/golang/go/src/cmd/gofmt
