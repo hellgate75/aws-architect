@@ -41,11 +41,11 @@ func (c *S3CreateBucket) Execute(logChannel chan string) (bool) {
 	}()
 	c.InProgress=true
 	session := aws.CreateSession();
-	client := aws.CreateS3Client(session, c.Region)
+	awsService := aws.CreateS3Service(session, c.Region)
 	logChannel <- fmt.Sprintf("Creating bucket : %s", c.BucketName)
 	logChannel <- fmt.Sprintf("Bucket Region : %s", c.Region)
 	logChannel <- fmt.Sprintf("Bucket ACL : %s", c.ACL)
-	bucketLocation, err := aws.CreateBucket(client, c.BucketName, c.Region, c.ACL)
+	bucketLocation, err := aws.CreateBucket(awsService, c.BucketName, c.Region, c.ACL)
 	if err == nil {
 		logChannel <- fmt.Sprintf("Bucket '%s' created at locaion : %s", c.BucketName, bucketLocation)
 		c.Success=true

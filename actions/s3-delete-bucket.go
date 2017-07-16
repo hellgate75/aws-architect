@@ -16,6 +16,7 @@ type S3DeleteBucket struct{
 	Message			string
 	BucketName	string
 	Region			string
+	Recursive		bool
 }
 
 func (c S3DeleteBucket) Init() (bool) {
@@ -40,10 +41,16 @@ func (c *S3DeleteBucket) Execute(logChannel chan string) (bool) {
 	}()
 	c.InProgress=true
 	session := aws.CreateSession();
-	client := aws.CreateS3Client(session, c.Region)
+	awsService := aws.CreateS3Service(session, c.Region)
 	logChannel <- fmt.Sprintf("Deleting bucket : %s", c.BucketName)
 	logChannel <- fmt.Sprintf("Bucket Region : %s", c.Region)
-	removed, err := aws.DeleteBucketRecursive(client, c.BucketName)
+	var removed bool
+	var err error
+	if c.Recursive {
+		removed, err = aws.DeleteBucketRecursive(awsService, c.BucketName)
+	} else  {
+		removed, err = aws.DeleteBucket(awsService, c.BucketName)
+	}
 	if err == nil {
 		logChannel <- fmt.Sprintf("Bucket '%s' removed : %t", c.BucketName, removed)
 		c.Success=true
@@ -91,6 +98,7 @@ func (c *S3DeleteBucket) GetUsage() (string) {
 func (c *S3DeleteBucket) AcquireValues() (bool) {
 	flag.StringVar(&c.BucketName, "bucket", "", "Amazon Web Services S3 Bucket Name")
 	flag.StringVar(&c.Region, "region", defaultAWSRegion, "Amazon Web Service reference Region")
+	flag.BoolVar(&c.Recursive, "recursive", false, "Delete recursively keys from S3 Bucket")
 	flag.Parse()
 	return  c.BucketName != ""
 }
@@ -114,9 +122,17 @@ func InitS3DeleteBucket() {
 		HasValue: true,
 		SampleValue: "region-string",
 	}
+	var parm3 abstract.Parameter = abstract.Parameter{
+		Name: "recursive",
+		Description: "Delete recursively keys from S3 Bucket (default: false)",
+		Mandatory: false,
+		HasValue: true,
+		SampleValue: "true-or-false",
+	}
 	var Parameters 	[]abstract.Parameter = make([]abstract.Parameter, 0)
 	Parameters = append(Parameters, parm1)
 	Parameters = append(Parameters, parm2)
+	Parameters = append(Parameters, parm3)
 	var  S3DeleteBucketAction *S3DeleteBucket = new (S3DeleteBucket)
 	S3DeleteBucketAction.Parameters= Parameters
 	S3DeleteBucketAction.Name = "Delete S3 Bucket"
