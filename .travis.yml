@@ -13,9 +13,12 @@ go:
 
 install:
  - go get -u github.com/golang/dep/cmd/dep
+ - go get -u github.com/golang/go/src/cmd/gofmt
 
 script:
+ - go vet .
+ - go fmt .
+ - gofmt -e -s -w .
  - dep ensure -update -v
  - travis_wait 20 go test -p 10 -timeout 20m -v ./test/...
- - go vet .
  - go build -buildmode exe -pkgdir ./vendor .

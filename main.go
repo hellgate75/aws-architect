@@ -1,20 +1,22 @@
 package main
 
 import (
-	"aws-architect/bootstrap"
 	"aws-architect/abstract"
+	"aws-architect/bootstrap"
+	"aws-architect/log"
 	"fmt"
 	"os"
 	"strings"
 	"time"
-	"aws-architect/log"
 )
 
 var currentAction abstract.ActionOps
+
 const loggingTimeout = 10
+
 var logger log.Logger
 
-func PrintHelp(command string) () {
+func PrintHelp(command string) {
 	var size int = abstract.GetActionRegistry().Size()
 	for i := 0; i < size; i++ {
 		var ops abstract.ActionOps = abstract.ActiveActionRegistry.ElementAt(i)
@@ -26,8 +28,7 @@ func PrintHelp(command string) () {
 	PrintUsage("")
 }
 
-
-func PrintUsage(command string) () {
+func PrintUsage(command string) {
 	if strings.ToLower(command) == "help" && len(os.Args) > 2 {
 		PrintHelp(strings.ToLower(os.Args[2]))
 	} else {
@@ -60,7 +61,7 @@ func init() {
 			}
 		}
 	}
-	if ! found {
+	if !found {
 		if len(os.Args) > 1 {
 			PrintUsage(os.Args[1])
 		} else {
@@ -75,14 +76,14 @@ func main() {
 	var args []string = make([]string, 0)
 	args = append(args, os.Args[0])
 	args = append(args, os.Args[2:]...)
-	os.Args=args
+	os.Args = args
 	var satisfied bool = currentAction.AcquireValues()
 	logger.Log(fmt.Sprintf("current action : %s", strings.ToLower(currentAction.GetCommand())))
 	if satisfied {
 		var logChannel chan string = make(chan string)
 		var response bool = false
-		go func(channel chan  string, progress func ()(bool)) () {
-			time.Sleep(time.Millisecond*500)
+		go func(channel chan string, progress func() bool) {
+			time.Sleep(time.Millisecond * 500)
 			for progress() {
 				select {
 				case message := <-channel:
@@ -94,18 +95,18 @@ func main() {
 				}
 			}
 		}(logChannel, currentAction.IsInProgress)
-		response=currentAction.Execute(logChannel)
+		response = currentAction.Execute(logChannel)
 		logger.Log(fmt.Sprintf("Execution of command %s completed : %t", currentAction.GetCommand(), response))
 		logger.Log(fmt.Sprintf("Exit Code : %d", currentAction.GetExitCode()))
 		logger.Log(fmt.Sprintf("Message : %s", currentAction.GetLastMessage()))
 		close(logChannel)
-	} else  {
+	} else {
 		var args []string = make([]string, 0)
 		args = append(args, os.Args[0])
 		args = append(args, "help")
 		args = append(args, currentAction.GetCommand())
-		os.Args=args
-		println("Command :", currentAction.GetCommand(),"-> wrong parameters")
+		os.Args = args
+		println("Command :", currentAction.GetCommand(), "-> wrong parameters")
 		PrintUsage("help")
 	}
 	duration := time.Since(startTime)

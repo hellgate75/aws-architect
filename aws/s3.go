@@ -1,8 +1,8 @@
 package aws
 
 import (
-	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/s3"
 )
 
 func CreateBucket(service *s3.S3, bucketName string, region string, acl string) (*string, error) {
@@ -11,19 +11,19 @@ func CreateBucket(service *s3.S3, bucketName string, region string, acl string) 
 	if region != DEFAULT_AWS_REGION {
 		output, err = service.CreateBucket(&s3.CreateBucketInput{
 			Bucket: aws.String(bucketName),
-			ACL: &acl,
+			ACL:    &acl,
 			CreateBucketConfiguration: &s3.CreateBucketConfiguration{
 				LocationConstraint: aws.String(region),
 			},
 		})
-	} else  {
+	} else {
 		output, err = service.CreateBucket(&s3.CreateBucketInput{
 			Bucket: aws.String(bucketName),
-			ACL: &acl,
+			ACL:    &acl,
 		})
 	}
 	if err != nil {
-		return  nil, err
+		return nil, err
 	}
 	err = service.WaitUntilBucketExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucketName),
@@ -36,7 +36,7 @@ func DeleteBucket(service *s3.S3, bucketName string) (bool, error) {
 		Bucket: aws.String(bucketName),
 	})
 	if err != nil {
-		return  false, err
+		return false, err
 	}
 	err = service.WaitUntilBucketNotExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucketName),
@@ -53,9 +53,9 @@ func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
 	}
 	var objects []*s3.Object = objectOutput.Contents
 	var removeList []*s3.ObjectIdentifier = make([]*s3.ObjectIdentifier, 0)
-	for i:=0; i<len(objects); i++ {
+	for i := 0; i < len(objects); i++ {
 		obj := objects[i]
-		removeList=append(removeList,&s3.ObjectIdentifier{
+		removeList = append(removeList, &s3.ObjectIdentifier{
 			Key: obj.Key,
 		})
 	}
@@ -63,7 +63,7 @@ func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
 	service.DeleteObjects(&s3.DeleteObjectsInput{
 		Bucket: aws.String(bucketName),
 		Delete: &s3.Delete{
-			Quiet: &Quite,
+			Quiet:   &Quite,
 			Objects: removeList,
 		},
 	})
@@ -71,12 +71,10 @@ func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
 		Bucket: aws.String(bucketName),
 	})
 	if err != nil {
-		return  false, err
+		return false, err
 	}
 	err = service.WaitUntilBucketNotExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucketName),
 	})
 	return true, err
 }
-
-
