@@ -1,4 +1,4 @@
-memo = "091b6ec704ce41497e09f9aa0c4e885b3f158923b6410293388b0ba394d695cb"
+memo = "9acc2375a7839e4ed37a8f60e26d63932d945cd2d837b60f190696b68c2612a9"
 
 [[projects]]
   name = "github.com/aws/aws-sdk-go"
@@ -23,6 +23,12 @@ memo = "091b6ec704ce41497e09f9aa0c4e885b3f158923b6410293388b0ba394d695cb"
   packages = ["."]
   revision = "d3de07a94d22b4a0972deb4b96d790c2c0ce8333"
   version = "v1.28.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/golang/mock"
+  packages = ["gomock"]
+  revision = "93f6609a15b7de76bd49259f1f9a6b58df358936"
 
 [[projects]]
   name = "github.com/jmespath/go-jmespath"

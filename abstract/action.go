@@ -77,6 +77,16 @@ type ActionOps interface {
 	* Return operation message or error message
 	 */
 	GetLastMessage() string
+	/*
+	*	SetArgumentParser method
+	* Set Specific Action argument parser
+	 */
+	SetArgumentParser(ArgumentParser) ()
+	/*
+	*	SetArgumentParser method
+	* Set Specific Action argument parser
+	 */
+	SetExecutor(Command) ()
 }
 
 /*
