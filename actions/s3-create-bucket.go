@@ -23,15 +23,31 @@ func InitS3CreateBucket() {
 	}
 	var parm3 abstract.Parameter = abstract.Parameter{
 		Name:        "acl",
-		Description: "Amazon Web Services S3 ACL string (default : " + defaultS3ACL + ")",
+		Description: "Amazon Web Services S3 Bucket ACL string (default : " + defaultS3ACL + ")",
 		Mandatory:   false,
 		HasValue:    true,
 		SampleValue: "acl-string",
+	}
+	var parm4 abstract.Parameter = abstract.Parameter{
+		Name:        "versioning",
+		Description: "Amazon Web Services S3 Versioning (default : disabled)",
+		Mandatory:   false,
+		HasValue:    true,
+		SampleValue: "enabled-or-disabled",
+	}
+	var parm5 abstract.Parameter = abstract.Parameter{
+		Name:        "cors-file",
+		Description: "Amazon Web Services S3 CORs YAML file (default : \"\")",
+		Mandatory:   false,
+		HasValue:    true,
+		SampleValue: "path-to-cors-yaml-file",
 	}
 	var Parameters []abstract.Parameter = make([]abstract.Parameter, 0)
 	Parameters = append(Parameters, parm1)
 	Parameters = append(Parameters, parm2)
 	Parameters = append(Parameters, parm3)
+	Parameters = append(Parameters, parm4)
+	Parameters = append(Parameters, parm5)
 	var S3CreateBucketAction *abstract.ActionImpl = new(abstract.ActionImpl)
 	S3CreateBucketAction.Parameters = Parameters
 	S3CreateBucketAction.Name = "Create S3 Bucket"

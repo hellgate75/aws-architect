@@ -90,6 +90,13 @@ With this command you will have the list of available sub-commands. In case you 
  ```
 
 
+### Some samples
+
+Here a list of common used configuration file samples:
+
+* [YAML CORs configuration file](samples/cors.yml)
+
+
 ### Issues
 
 We track and improve code accordingly to plan and issues you create on project issues tracker at :
