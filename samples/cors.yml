@@ -1,0 +1,14 @@
+CORSConfiguration:
+  CORSRules:
+  - AllowedOrigins:
+    - '*'
+    AllowedMethods:
+    - PUT
+    - GET
+    - POST
+    - DELETE
+    MaxAgeSeconds: 3000
+    AllowedHeaders:
+    - '*'
+#    ExposeHeaders:
+#    - '*'
