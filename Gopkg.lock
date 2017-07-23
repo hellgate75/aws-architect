@@ -1,10 +1,10 @@
-memo = "9acc2375a7839e4ed37a8f60e26d63932d945cd2d837b60f190696b68c2612a9"
+memo = "fd0ffbff806889d7734eacde14a2892dcc4b67086c8065aaf11a1a2cf37828eb"
 
 [[projects]]
   name = "github.com/aws/aws-sdk-go"
-  packages = ["aws","aws/awserr","aws/awsutil","aws/client","aws/client/metadata","aws/corehandlers","aws/credentials","aws/credentials/ec2rolecreds","aws/credentials/endpointcreds","aws/credentials/stscreds","aws/defaults","aws/ec2metadata","aws/endpoints","aws/request","aws/session","aws/signer/v4","internal/shareddefaults","private/protocol","private/protocol/query","private/protocol/query/queryutil","private/protocol/rest","private/protocol/restxml","private/protocol/xml/xmlutil","service/s3","service/sts"]
-  revision = "b73b028e599fa9176687c70b8f9cafbe57c27d20"
-  version = "v1.10.11"
+  packages = ["aws","aws/awserr","aws/awsutil","aws/client","aws/client/metadata","aws/corehandlers","aws/credentials","aws/credentials/ec2rolecreds","aws/credentials/endpointcreds","aws/credentials/stscreds","aws/defaults","aws/ec2metadata","aws/endpoints","aws/request","aws/session","aws/signer/v4","internal/shareddefaults","private/protocol","private/protocol/query","private/protocol/query/queryutil","private/protocol/rest","private/protocol/restxml","private/protocol/xml/xmlutil","service/cloudformation","service/s3","service/sts"]
+  revision = "afd601335e2a72d43caa3af6bd2abe512fcc3bfd"
+  version = "v1.10.14"
 
 [[projects]]
   branch = "master"
@@ -25,10 +25,10 @@ memo = "9acc2375a7839e4ed37a8f60e26d63932d945cd2d837b60f190696b68c2612a9"
   version = "v1.28.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/golang/mock"
   packages = ["gomock"]
-  revision = "93f6609a15b7de76bd49259f1f9a6b58df358936"
+  revision = "13f360950a79f5864a972c786a10a50e44b69541"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/jmespath/go-jmespath"
@@ -52,4 +52,4 @@ memo = "9acc2375a7839e4ed37a8f60e26d63932d945cd2d837b60f190696b68c2612a9"
   branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "3b4ad1db5b2a649883ff3782f5f9f6fb52be71af"
+  revision = "25c4ec802a7d637f88d584ab26798e94ad14c13b"

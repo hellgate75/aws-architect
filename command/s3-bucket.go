@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/hellgate75/aws-architect/abstract"
-	"github.com/hellgate75/aws-architect/aws"
+	"github.com/hellgate75/aws-architect/awslet"
 	"strconv"
 	"strings"
 )
@@ -27,12 +27,12 @@ func (p *S3CreateBucket) Execute(action *abstract.ActionImpl, arguments []interf
 		}
 	}()
 	action.InProgress = true
-	session := aws.CreateSession()
+	session := awslet.CreateSession()
 	var awsService *s3.S3
 	if iamRole == "" {
-		awsService = aws.CreateS3Service(session, awsRegion)
+		awsService = awslet.CreateS3Service(session, awsRegion)
 	} else {
-		awsService = aws.CreateS3ServiceAssumeRole(session, awsRegion, iamRole)
+		awsService = awslet.CreateS3ServiceAssumeRole(session, awsRegion, iamRole)
 
 	}
 	logChannel <- fmt.Sprintf("Creating bucket : %s", bucketName)
@@ -40,7 +40,7 @@ func (p *S3CreateBucket) Execute(action *abstract.ActionImpl, arguments []interf
 	logChannel <- fmt.Sprintf("Bucket ACL : %s", awsAcl)
 	logChannel <- fmt.Sprintf("Bucket Versioning : %s", s3Versioning)
 	logChannel <- fmt.Sprintf("Bucket Cors file : %s", s3Cors)
-	bucketLocation, err := aws.CreateBucket(awsService, bucketName, awsRegion, awsAcl, strings.ToLower(s3Versioning) == "enabled", s3Cors)
+	bucketLocation, err := awslet.CreateBucket(awsService, bucketName, awsRegion, awsAcl, strings.ToLower(s3Versioning) == "enabled", s3Cors)
 	if err == nil {
 		logChannel <- fmt.Sprintf("Bucket '%s' created at location : %s", bucketName, *bucketLocation)
 		action.Success = true
@@ -103,12 +103,12 @@ func (p *S3DeleteBucket) Execute(action *abstract.ActionImpl, arguments []interf
 		}
 	}()
 	action.InProgress = true
-	session := aws.CreateSession()
+	session := awslet.CreateSession()
 	var awsService *s3.S3
 	if iamRole == "" {
-		awsService = aws.CreateS3Service(session, awsRegion)
+		awsService = awslet.CreateS3Service(session, awsRegion)
 	} else {
-		awsService = aws.CreateS3ServiceAssumeRole(session, awsRegion, iamRole)
+		awsService = awslet.CreateS3ServiceAssumeRole(session, awsRegion, iamRole)
 
 	}
 	logChannel <- fmt.Sprintf("Deleting bucket : %s", bucketName)
@@ -116,9 +116,9 @@ func (p *S3DeleteBucket) Execute(action *abstract.ActionImpl, arguments []interf
 	var removed bool
 	var err error
 	if s3Recursive {
-		removed, err = aws.DeleteBucketRecursive(awsService, bucketName)
+		removed, err = awslet.DeleteBucketRecursive(awsService, bucketName)
 	} else {
-		removed, err = aws.DeleteBucket(awsService, bucketName)
+		removed, err = awslet.DeleteBucket(awsService, bucketName)
 	}
 	if err == nil {
 		logChannel <- fmt.Sprintf("Bucket '%s' removed : %t", bucketName, removed)
@@ -171,13 +171,13 @@ func (p *S3BucketStatus) Execute(action *abstract.ActionImpl, arguments []interf
 		}
 	}()
 	action.InProgress = true
-	session := aws.CreateSession()
-	var awsService *s3.S3 = aws.CreateS3Service(session, awsRegion)
+	session := awslet.CreateSession()
+	var awsService *s3.S3 = awslet.CreateS3Service(session, awsRegion)
 	logChannel <- fmt.Sprintf("Status for bucket : %s", bucketName)
 	logChannel <- fmt.Sprintf("Bucket Region : %s", awsRegion)
 	var exists bool
 	var err error
-	exists, err = aws.BucketStatus(awsService, bucketName)
+	exists, err = awslet.BucketStatus(awsService, bucketName)
 	if err == nil {
 		logChannel <- fmt.Sprintf("Bucket '%s' exists : %t", bucketName, exists)
 		action.Message = fmt.Sprintf("Status of S3 Bucket %s in Region %s : %t!!", bucketName, awsRegion, exists)

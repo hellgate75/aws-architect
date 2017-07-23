@@ -1,4 +1,4 @@
-package aws
+package awslet
 
 import (
 	"errors"
@@ -176,6 +176,85 @@ func UpdateStack(service *cloudformation.CloudFormation, stackName string, remot
 		} else {
 			status = true
 			logger.Log(fmt.Sprintf("Stack Id : %s => Update Success", *stackOutput.StackId))
+		}
+
+	} else {
+		logger.ErrorS(fmt.Sprintf("Stack Name : %s => CloudFormation Load Error", stackName))
+		logger.Error(err)
+	}
+	return status, err
+}
+
+func CancelUpdateStack(service *cloudformation.CloudFormation, stackName string, clientRequestToken string) (bool, error) {
+	var status bool
+	var err error
+	var cancelUpdateStackInput *cloudformation.CancelUpdateStackInput = &cloudformation.CancelUpdateStackInput{
+		StackName: aws.String(stackName),
+	}
+
+	if clientRequestToken != "" {
+		cancelUpdateStackInput.ClientRequestToken = aws.String(clientRequestToken)
+	}
+
+	stackOutput, err := service.CancelUpdateStack(cancelUpdateStackInput)
+	if err == nil {
+		logger.Log(fmt.Sprintf("Stack Name : %s => CloudFormation Loaded Successfully", stackName))
+		logger.Log(fmt.Sprintf("Stack Cancel Updated => Name: %s", stackName))
+		err = service.WaitUntilStackUpdateComplete(&cloudformation.DescribeStacksInput{
+			StackName: aws.String(stackName),
+		})
+		if err != nil {
+			logger.ErrorS(fmt.Sprintf("Stack Name : %s => Waiting Cancel Update Error", stackName))
+			logger.Error(err)
+			return status, err
+		} else {
+			status = true
+			logger.Log(fmt.Sprintf("Stack Name : %s => Cancel Update Success", stackName))
+			logger.Log(fmt.Sprintf("Message : %s", stackOutput.String()))
+		}
+
+	} else {
+		logger.ErrorS(fmt.Sprintf("Stack Name : %s => CloudFormation Load Error", stackName))
+		logger.Error(err)
+	}
+	return status, err
+}
+
+func ContinueUpdateRollbackStack(service *cloudformation.CloudFormation, stackName string, clientRequestToken string,
+	stackRoleArn string, resourceTypesSkip []*string) (bool, error) {
+	var status bool
+	var err error
+	var continueUpdateRollBackStackInput *cloudformation.ContinueUpdateRollbackInput = &cloudformation.ContinueUpdateRollbackInput{
+		StackName: aws.String(stackName),
+	}
+
+	if clientRequestToken != "" {
+		continueUpdateRollBackStackInput.ClientRequestToken = aws.String(clientRequestToken)
+	}
+
+	if stackRoleArn != "" {
+		continueUpdateRollBackStackInput.RoleARN = aws.String(stackRoleArn)
+	}
+
+	if len(resourceTypesSkip) > 0 {
+		continueUpdateRollBackStackInput.ResourcesToSkip = resourceTypesSkip
+	}
+
+	stackOutput, err := service.ContinueUpdateRollback(continueUpdateRollBackStackInput)
+	if err == nil {
+		logger.Log(fmt.Sprintf("Stack Name : %s => CloudFormation Loaded Successfully", stackName))
+		logger.Log(fmt.Sprintf("Stack Rollback Updated => Name: %s", stackName))
+		err = service.WaitUntilStackUpdateComplete(&cloudformation.DescribeStacksInput{
+			StackName: aws.String(stackName),
+		})
+		if err != nil {
+			logger.ErrorS(fmt.Sprintf("Stack Name : %s => Waiting Rollback Update Error", stackName))
+			logger.Error(err)
+			return status, err
+		} else {
+			status = true
+			logger.Log(fmt.Sprintf("Stack Name : %s => Rollback Update Success", stackName))
+			logger.Log(fmt.Sprintf("Message : %s", stackOutput.String()))
 		}
 
 	} else {

@@ -1,4 +1,4 @@
-package aws
+package awslet
 
 import (
 	"fmt"
@@ -97,7 +97,7 @@ func DeleteBucket(service *s3.S3, bucketName string) (bool, error) {
 	err = service.WaitUntilBucketNotExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucketName),
 	})
-	return err==nil, err
+	return err == nil, err
 }
 
 func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
@@ -132,7 +132,7 @@ func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
 	err = service.WaitUntilBucketNotExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucketName),
 	})
-	return err==nil, err
+	return err == nil, err
 }
 
 func BucketStatus(service *s3.S3, bucketName string) (bool, error) {
@@ -145,4 +145,3 @@ func BucketStatus(service *s3.S3, bucketName string) (bool, error) {
 	logger.Log(fmt.Sprintf("Bucket Name: %s\nBucket Location Constraint: %s", bucketName, output.String()))
 	return true, err
 }
-
