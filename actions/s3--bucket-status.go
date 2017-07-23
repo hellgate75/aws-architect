@@ -28,7 +28,7 @@ func InitS3BucketStatus() {
 	S3BucketStatusAction.Parameters = Parameters
 	S3BucketStatusAction.Name = "Status of S3 Bucket"
 	S3BucketStatusAction.Command = "bucket-status"
-	S3BucketStatusAction.Description = "Recover Location of Amazon Web Services S3 Bucket from Amazon Web Services Region"
+	S3BucketStatusAction.Description = "Recover Location Constraint of Amazon Web Services S3 Bucket from Amazon Web Services Region"
 	S3BucketStatusAction.Usage = helpers.DefineUsage(S3BucketStatusAction.Command, S3BucketStatusAction.Description, S3BucketStatusAction.Parameters)
 	S3BucketStatusAction.SetArgumentParser(new(command.S3BucketStatusParser))
 	S3BucketStatusAction.SetExecutor(new(command.S3BucketStatus))

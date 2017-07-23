@@ -142,7 +142,7 @@ func BucketStatus(service *s3.S3, bucketName string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	logger.Log(fmt.Sprintf("Bucket Name: %s\nBucket Location: %s", bucketName, output.String()))
+	logger.Log(fmt.Sprintf("Bucket Name: %s\nBucket Location Constraint: %s", bucketName, output.String()))
 	return true, err
 }
 
