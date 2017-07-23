@@ -97,7 +97,7 @@ func DeleteBucket(service *s3.S3, bucketName string) (bool, error) {
 	err = service.WaitUntilBucketNotExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucketName),
 	})
-	return true, err
+	return err==nil, err
 }
 
 func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
@@ -132,5 +132,17 @@ func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
 	err = service.WaitUntilBucketNotExists(&s3.HeadBucketInput{
 		Bucket: aws.String(bucketName),
 	})
+	return err==nil, err
+}
+
+func BucketStatus(service *s3.S3, bucketName string) (bool, error) {
+	output, err := service.GetBucketLocation(&s3.GetBucketLocationInput{
+		Bucket: aws.String(bucketName),
+	})
+	if err != nil {
+		return false, err
+	}
+	logger.Log(fmt.Sprintf("Bucket Name: %s\nBucket Location: %s", bucketName, output.String()))
 	return true, err
 }
+

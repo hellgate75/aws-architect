@@ -11,6 +11,7 @@ func InitActions() {
 	actions.InitCounter()
 	actions.InitS3CreateBucket()
 	actions.InitS3DeleteBucket()
+	actions.InitS3BucketStatus()
 	//abstract.SaveSettings(Settings)
 
 	var err error
