@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/hellgate75/aws-architect/abstract"
 	"github.com/hellgate75/aws-architect/bootstrap"
 	"github.com/hellgate75/aws-architect/log"
-	"fmt"
 	"os"
 	"strings"
 	"time"

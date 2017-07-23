@@ -1,13 +1,13 @@
 package aws
 
 import (
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"time"
-	"os"
 	"github.com/hellgate75/aws-architect/helpers"
 	"github.com/hellgate75/aws-architect/log"
-	"fmt"
+	"os"
+	"time"
 )
 
 var logger log.Logger = log.Logger{}
@@ -40,13 +40,13 @@ func CreateBucket(service *s3.S3, bucketName string, region string, acl string, 
 		_, err = service.PutBucketVersioning(&s3.PutBucketVersioningInput{
 			Bucket: aws.String(bucketName),
 			VersioningConfiguration: &s3.VersioningConfiguration{
-				Status: aws.String("Enabled"),
+				Status:    aws.String("Enabled"),
 				MFADelete: aws.String("Disabled"),
 			},
 		})
 	}
 	if corsFile != "" {
-		if _,err = os.Stat(corsFile); err==nil {
+		if _, err = os.Stat(corsFile); err == nil {
 			cors, err := helpers.LoadCORs(corsFile)
 			if err == nil {
 				var corsList []*s3.CORSRule = make([]*s3.CORSRule, 0)
@@ -54,18 +54,18 @@ func CreateBucket(service *s3.S3, bucketName string, region string, acl string, 
 					ruleConf := cors.CORSConfiguration.CORSRules[i]
 					if ruleConf.MaxAgeSeconds > 0 {
 						corsList = append(corsList, &s3.CORSRule{
-							MaxAgeSeconds: aws.Int64(int64(ruleConf.MaxAgeSeconds)),
+							MaxAgeSeconds:  aws.Int64(int64(ruleConf.MaxAgeSeconds)),
 							AllowedOrigins: aws.StringSlice(ruleConf.AllowedOrigins),
 							AllowedHeaders: aws.StringSlice(ruleConf.AllowedHeaders),
 							AllowedMethods: aws.StringSlice(ruleConf.AllowedMethods),
-							ExposeHeaders: aws.StringSlice(ruleConf.ExposeHeaders),
+							ExposeHeaders:  aws.StringSlice(ruleConf.ExposeHeaders),
 						})
 					} else {
 						corsList = append(corsList, &s3.CORSRule{
 							AllowedOrigins: aws.StringSlice(ruleConf.AllowedOrigins),
 							AllowedHeaders: aws.StringSlice(ruleConf.AllowedHeaders),
 							AllowedMethods: aws.StringSlice(ruleConf.AllowedMethods),
-							ExposeHeaders: aws.StringSlice(ruleConf.ExposeHeaders),
+							ExposeHeaders:  aws.StringSlice(ruleConf.ExposeHeaders),
 						})
 					}
 				}

@@ -14,7 +14,7 @@ type Settings struct {
 	DebugDisabled bool `yaml:"noDebug"`
 }
 
-func LoadSettings()  (Settings, error) {
+func LoadSettings() (Settings, error) {
 	var settings Settings = Settings{}
 	var err error
 	var file *os.File
@@ -34,7 +34,7 @@ func LoadSettings()  (Settings, error) {
 	return settings, err
 }
 
-func DeserializeSettings(bytes []byte, settings *Settings) (error) {
+func DeserializeSettings(bytes []byte, settings *Settings) error {
 	var err error
 	if err = yaml.Unmarshal(bytes, settings); err == nil {
 		return nil

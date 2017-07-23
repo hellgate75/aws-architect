@@ -1,8 +1,8 @@
 package helpers
 
 import (
-	"github.com/hellgate75/aws-architect/abstract"
 	"fmt"
+	"github.com/hellgate75/aws-architect/abstract"
 )
 
 func DefineUsage(command string, description string, parameters []abstract.Parameter) string {

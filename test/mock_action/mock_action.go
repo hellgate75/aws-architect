@@ -1,8 +1,8 @@
 package action
 
 import (
-	"github.com/golang/mock/gomock"
 	"fmt"
+	"github.com/golang/mock/gomock"
 	"strconv"
 )
 
@@ -30,9 +30,9 @@ func (_m *MockAction) EXPECT() *MockActionMockRecorder {
 }
 
 // Init mocks base method
-func (_m *MockAction) Init() (bool) {
+func (_m *MockAction) Init() bool {
 	values := _m.ctrl.Call(_m, "Init")
-	return  values[0] == true
+	return values[0] == true
 }
 
 // Init indicates an expected call of Init
@@ -41,9 +41,9 @@ func (_mr *MockActionMockRecorder) Init() *gomock.Call {
 }
 
 // Reset mocks base method
-func (_m *MockAction) Reset() (bool) {
+func (_m *MockAction) Reset() bool {
 	values := _m.ctrl.Call(_m, "Reset")
-	return  values[0] == true
+	return values[0] == true
 }
 
 // Reset indicates an expected call of Reset
@@ -52,9 +52,9 @@ func (_mr *MockActionMockRecorder) Reset() *gomock.Call {
 }
 
 // Execute mocks base method
-func (_m *MockAction) Execute(_param0 chan string) (bool) {
+func (_m *MockAction) Execute(_param0 chan string) bool {
 	values := _m.ctrl.Call(_m, "Execute", _param0)
-	return  values[0] == true
+	return values[0] == true
 }
 
 // Execute indicates an expected call of Execute
@@ -63,9 +63,9 @@ func (_mr *MockActionMockRecorder) Execute(_param0 interface{}) *gomock.Call {
 }
 
 // IsInProgress mocks base method
-func (_m *MockAction) IsInProgress() (bool) {
+func (_m *MockAction) IsInProgress() bool {
 	values := _m.ctrl.Call(_m, "IsInProgress")
-	return  values[0] == true
+	return values[0] == true
 }
 
 // IsInProgress indicates an expected call of IsInProgress
@@ -74,9 +74,9 @@ func (_mr *MockActionMockRecorder) IsInProgress() *gomock.Call {
 }
 
 // GetCommand mocks base method
-func (_m *MockAction) GetCommand() (string) {
+func (_m *MockAction) GetCommand() string {
 	values := _m.ctrl.Call(_m, "GetCommand")
-	return  fmt.Sprintf("%s",values[0])
+	return fmt.Sprintf("%s", values[0])
 }
 
 // GetCommand indicates an expected call of GetCommand
@@ -85,9 +85,9 @@ func (_mr *MockActionMockRecorder) GetCommand() *gomock.Call {
 }
 
 // GetName mocks base method
-func (_m *MockAction) GetName() (string) {
+func (_m *MockAction) GetName() string {
 	values := _m.ctrl.Call(_m, "GetName")
-	return  fmt.Sprintf("%s",values[0])
+	return fmt.Sprintf("%s", values[0])
 }
 
 // GetName indicates an expected call of GetName
@@ -96,9 +96,9 @@ func (_mr *MockActionMockRecorder) GetName() *gomock.Call {
 }
 
 // GetUsage mocks base method
-func (_m *MockAction) GetUsage() (string) {
+func (_m *MockAction) GetUsage() string {
 	values := _m.ctrl.Call(_m, "GetUsage")
-	return  fmt.Sprintf("%s",values[0])
+	return fmt.Sprintf("%s", values[0])
 }
 
 // GetName indicates an expected call of GetUsage
@@ -107,9 +107,9 @@ func (_mr *MockActionMockRecorder) GetUsage() *gomock.Call {
 }
 
 // AcquireValues mocks base method
-func (_m *MockAction) AcquireValues() (bool) {
+func (_m *MockAction) AcquireValues() bool {
 	values := _m.ctrl.Call(_m, "AcquireValues")
-	return  values[0] == true
+	return values[0] == true
 }
 
 // AcquireValues indicates an expected call of AcquireValues
@@ -118,9 +118,9 @@ func (_mr *MockActionMockRecorder) AcquireValues() *gomock.Call {
 }
 
 // GetExitCode mocks base method
-func (_m *MockAction) GetExitCode() (int) {
+func (_m *MockAction) GetExitCode() int {
 	values := _m.ctrl.Call(_m, "GetExitCode")
-	val,_  := strconv.Atoi(fmt.Sprintf("%v",values[0]))
+	val, _ := strconv.Atoi(fmt.Sprintf("%v", values[0]))
 	return val
 }
 
@@ -130,9 +130,9 @@ func (_mr *MockActionMockRecorder) GetExitCode() *gomock.Call {
 }
 
 // GetLastMessage mocks base method
-func (_m *MockAction) GetLastMessage() (string) {
+func (_m *MockAction) GetLastMessage() string {
 	values := _m.ctrl.Call(_m, "GetLastMessage")
-	return  fmt.Sprintf("%s",values[0])
+	return fmt.Sprintf("%s", values[0])
 }
 
 // GetLastMessage indicates an expected call of GetLastMessage

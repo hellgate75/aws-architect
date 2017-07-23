@@ -1,18 +1,18 @@
 package command
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
-	"strconv"
-	"os"
-	"bufio"
 	"github.com/hellgate75/aws-architect/abstract"
+	"os"
+	"strconv"
 )
 
 type CounterCommand struct {
 }
 
-func (p *CounterCommand) Execute(action *abstract.ActionImpl,arguments []interface{},logChannel chan string) (bool) {
+func (p *CounterCommand) Execute(action *abstract.ActionImpl, arguments []interface{}, logChannel chan string) bool {
 	var path string = fmt.Sprintf("%v", arguments[0])
 	skip, _ := strconv.Atoi(fmt.Sprintf("%v", arguments[1]))
 	defer func() {
@@ -59,19 +59,19 @@ func (p *CounterCommand) Execute(action *abstract.ActionImpl,arguments []interfa
 }
 
 type CounterParser struct {
-	Skip       int
-	Path       string
+	Skip int
+	Path string
 }
 
-func (p *CounterParser) Validate() (bool) {
+func (p *CounterParser) Validate() bool {
 	flag.StringVar(&p.Path, "file", "", "Full qualified file path")
 	flag.IntVar(&p.Skip, "skip", 0, "Number of row to skip count from file top")
 	flag.Parse()
 	return p.Path != ""
 }
 
-func (p *CounterParser) Parse() ([]interface{}) {
-	var arguments []interface{} = make([]interface{},0)
+func (p *CounterParser) Parse() []interface{} {
+	var arguments []interface{} = make([]interface{}, 0)
 	arguments = append(arguments, p.Path)
 	arguments = append(arguments, p.Skip)
 	return arguments

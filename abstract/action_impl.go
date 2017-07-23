@@ -9,8 +9,8 @@ type ActionImpl struct {
 	InProgress bool
 	Success    bool
 	Message    string
-	Parser		 ArgumentParser
-	Executor		 Command
+	Parser     ArgumentParser
+	Executor   Command
 }
 
 func (c ActionImpl) Init() bool {
@@ -60,11 +60,11 @@ func (c *ActionImpl) GetUsage() string {
 	return c.Usage
 }
 
-func (c *ActionImpl) SetArgumentParser(parser ArgumentParser) () {
+func (c *ActionImpl) SetArgumentParser(parser ArgumentParser) {
 	c.Parser = parser
 }
 
-func (c *ActionImpl) SetExecutor(command Command) () {
+func (c *ActionImpl) SetExecutor(command Command) {
 	c.Executor = command
 }
 
@@ -75,4 +75,3 @@ func (c *ActionImpl) AcquireValues() bool {
 func (c *ActionImpl) GetLastMessage() string {
 	return c.Message
 }
-

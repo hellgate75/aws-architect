@@ -2,8 +2,8 @@ package actions
 
 import (
 	"github.com/hellgate75/aws-architect/abstract"
-	"github.com/hellgate75/aws-architect/helpers"
 	"github.com/hellgate75/aws-architect/command"
+	"github.com/hellgate75/aws-architect/helpers"
 )
 
 func InitCounter() {

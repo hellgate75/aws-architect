@@ -81,12 +81,12 @@ type ActionOps interface {
 	*	SetArgumentParser method
 	* Set Specific Action argument parser
 	 */
-	SetArgumentParser(ArgumentParser) ()
+	SetArgumentParser(ArgumentParser)
 	/*
 	*	SetArgumentParser method
 	* Set Specific Action argument parser
 	 */
-	SetExecutor(Command) ()
+	SetExecutor(Command)
 }
 
 /*

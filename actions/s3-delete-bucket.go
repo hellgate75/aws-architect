@@ -2,8 +2,8 @@ package actions
 
 import (
 	"github.com/hellgate75/aws-architect/abstract"
-	"github.com/hellgate75/aws-architect/helpers"
 	"github.com/hellgate75/aws-architect/command"
+	"github.com/hellgate75/aws-architect/helpers"
 )
 
 func InitS3DeleteBucket() {
@@ -28,10 +28,18 @@ func InitS3DeleteBucket() {
 		HasValue:    true,
 		SampleValue: "true-or-false",
 	}
+	var parm4 abstract.Parameter = abstract.Parameter{
+		Name:        "use-role",
+		Description: "Amazon Web Services IAM Role for action (default : \"\")",
+		Mandatory:   false,
+		HasValue:    true,
+		SampleValue: "arn-to-role",
+	}
 	var Parameters []abstract.Parameter = make([]abstract.Parameter, 0)
 	Parameters = append(Parameters, parm1)
 	Parameters = append(Parameters, parm2)
 	Parameters = append(Parameters, parm3)
+	Parameters = append(Parameters, parm4)
 	var S3DeleteBucketAction *abstract.ActionImpl = new(abstract.ActionImpl)
 	S3DeleteBucketAction.Parameters = Parameters
 	S3DeleteBucketAction.Name = "Delete S3 Bucket"
