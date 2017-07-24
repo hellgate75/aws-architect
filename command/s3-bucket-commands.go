@@ -67,8 +67,8 @@ type S3CreateBucketParser struct {
 
 func (p *S3CreateBucketParser) Validate() bool {
 	flag.StringVar(&p.BucketName, "bucket", "", "Amazon Web Services S3 Bucket Name")
-	flag.StringVar(&p.Region, "region", defaultAWSRegion, "Amazon Web Service reference Region (default : "+defaultAWSRegion+")")
-	flag.StringVar(&p.ACL, "acl", defaultS3ACL, "Amazon Web ServiceS3 Bucket ACL string (default : "+defaultS3ACL+")")
+	flag.StringVar(&p.Region, "region", DefaultAWSRegion, "Amazon Web Service reference Region (default : "+DefaultAWSRegion+")")
+	flag.StringVar(&p.ACL, "acl", DefaultS3ACL, "Amazon Web ServiceS3 Bucket ACL string (default : "+DefaultS3ACL+")")
 	flag.StringVar(&p.CORs, "cors-file", "", "Amazon Web Services S3 CORs YAML file (default : \"\")")
 	flag.StringVar(&p.Versioning, "versioning", "disabled", "Amazon Web Services S3 Versioning (default : disabled)")
 	flag.StringVar(&p.UseRole, "use-role", "", "Amazon Web Services IAM Role for action (default : \"\")")
@@ -143,7 +143,7 @@ type S3DeleteBucketParser struct {
 
 func (p *S3DeleteBucketParser) Validate() bool {
 	flag.StringVar(&p.BucketName, "bucket", "", "Amazon Web Services S3 Bucket Name")
-	flag.StringVar(&p.Region, "region", defaultAWSRegion, "Amazon Web Service reference Region")
+	flag.StringVar(&p.Region, "region", DefaultAWSRegion, "Amazon Web Service reference Region")
 	flag.BoolVar(&p.Recursive, "recursive", false, "Delete recursively keys from S3 Bucket")
 	flag.StringVar(&p.UseRole, "use-role", "", "Amazon Web Services IAM Role for action (default : \"\")")
 	flag.Parse()
@@ -199,7 +199,7 @@ type S3BucketStatusParser struct {
 
 func (p *S3BucketStatusParser) Validate() bool {
 	flag.StringVar(&p.BucketName, "bucket", "", "Amazon Web Services S3 Bucket Name")
-	flag.StringVar(&p.Region, "region", defaultAWSRegion, "Amazon Web Service reference Region")
+	flag.StringVar(&p.Region, "region", DefaultAWSRegion, "Amazon Web Service reference Region")
 	flag.Parse()
 	return p.BucketName != ""
 }

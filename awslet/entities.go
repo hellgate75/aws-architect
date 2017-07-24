@@ -29,7 +29,7 @@ func convertCfnTags(tags [][]string) []*cloudformation.Tag {
 * where key and value parameter, and key-value couple fo values are separated by other ones by "|" character.
 * In the command line this group should be bounded by quote marks (")
  */
-func parseTags(tagsString string) [][]string {
+func ParseTags(tagsString string) [][]string {
 	var cfnTags [][]string = make([][]string, 0)
 	if strings.Index(tagsString, "|") <= 0 || tagsString == "" {
 		return cfnTags
@@ -44,7 +44,7 @@ func parseTags(tagsString string) [][]string {
 	return cfnTags
 }
 
-func tagsHelper() string {
+func TagsHelper() string {
 	return "key1=value1/|...|keyN=valueN,\n" +
 		"where key and value represent tag, and key-value couple fo values are separated by other ones by \"|\" character.\n" +
 		"In the command line this group should be bounded by quote marks (\")"
@@ -80,7 +80,7 @@ func convertCfnParams(params [][]string) []*cloudformation.Parameter {
 * by quote marks (")
  */
 
-func parseParams(parametersString string) [][]string {
+func ParseParams(parametersString string) [][]string {
 	var cfnParams [][]string = make([][]string, 0)
 	if strings.Index(parametersString, "|") <= 0 || parametersString == "" {
 		return cfnParams
@@ -103,7 +103,7 @@ func parseParams(parametersString string) [][]string {
 	return cfnParams
 }
 
-func paramsHelper() string {
+func ParamsHelper() string {
 	return "key1=value1/[use_previous_value_1]|...|keyN=valueN/[use_previous_value_N], \n" +
 		"where key and value parameter items extended by use_previous_value, that is the option to use previous stack used \n" +
 		"parameter values. key-value-usv tuple value is separated by other ones by \"|\" character. \n" +
@@ -117,7 +117,7 @@ func paramsHelper() string {
 * In the command line this group should be bounded by quote marks (")
  */
 
-func parseResourceTypes(resourceTypesString string) []*string {
+func ParseResourceTypes(resourceTypesString string) []*string {
 	var resTypes []*string = make([]*string, 0)
 	if strings.Index(resourceTypesString, ",") <= 0 || resourceTypesString == "" {
 		return resTypes
@@ -130,7 +130,7 @@ func parseResourceTypes(resourceTypesString string) []*string {
 	return resTypes
 }
 
-func resourceTypesHelper() string {
+func ResourceTypesHelper() string {
 	return "ResourceType1,ResourceType2,...,ResourceTypeN\n" +
 		"where ResourceType items are comma separated, in AWS API format (e.g.: AWS::EC2::Instance, AWS::EC2::*, or Custom::MyCustomInstance).\n" +
 		"In the command line this group should be bounded by quote marks (\")"
@@ -143,7 +143,7 @@ func resourceTypesHelper() string {
 * In the command line this group should be bounded by quote marks (")
  */
 
-func parseNotificationArns(notificationArnString string) []*string {
+func ParseNotificationArns(notificationArnString string) []*string {
 	var notificationArns []*string = make([]*string, 0)
 	if strings.Index(notificationArnString, ",") <= 0 || notificationArnString == "" {
 		return notificationArns
@@ -156,7 +156,7 @@ func parseNotificationArns(notificationArnString string) []*string {
 	return notificationArns
 }
 
-func notificationArnsHelper() string {
+func NotificationArnsHelper() string {
 	return "NotificationArn1,NotificationArn2,...,NotificationArnN\n" +
 		"where NotificationArn items are comma separated, and are reference to notification topics\n" +
 		"In the command line this group should be bounded by quote marks (\")"
