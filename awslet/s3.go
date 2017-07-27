@@ -119,7 +119,7 @@ func DeleteBucketRecursive(service *s3.S3, bucketName string) (bool, error) {
 	service.DeleteObjects(&s3.DeleteObjectsInput{
 		Bucket: aws.String(bucketName),
 		Delete: &s3.Delete{
-			Quiet:   &Quite,
+			Quiet:   aws.Bool(Quite),
 			Objects: removeList,
 		},
 	})
@@ -144,4 +144,15 @@ func BucketStatus(service *s3.S3, bucketName string) (bool, error) {
 	}
 	logger.Log(fmt.Sprintf("Bucket Name: %s\nBucket Location Constraint: %s", bucketName, output.String()))
 	return true, err
+}
+
+func ListBuckets(service *s3.S3) ([]*s3.Bucket, error) {
+	var output *s3.ListBucketsOutput
+	var err error
+	output, err = service.ListBuckets(&s3.ListBucketsInput{
+	})
+	if err != nil {
+		return make([]*s3.Bucket, 0), err
+	}
+	return output.Buckets, err
 }

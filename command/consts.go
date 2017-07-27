@@ -1,4 +1,4 @@
 package command
 
-const DefaultAWSRegion = "us-east-1"
-const DefaultS3ACL = "public-read-write"
+const DEFAULT_AWS_REGION = "us-east-1"
+const DEFAULT_S3_ACL = "public-read-write"
