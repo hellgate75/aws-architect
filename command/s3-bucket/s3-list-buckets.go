@@ -35,6 +35,7 @@ func (p *S3ListBuckets) Execute(action *abstract.ActionImpl, arguments []interfa
 	if err == nil {
 		if len(buckets) > 0 {
 			var bucketNames string =""
+			var numShownBucket int = 0
 			for i:=0; i < len(buckets); i++ {
 				var bucket *s3.Bucket = buckets[i]
 				var matched bool
@@ -43,9 +44,16 @@ func (p *S3ListBuckets) Execute(action *abstract.ActionImpl, arguments []interfa
 					var bucketData string  = fmt.Sprintf("Bucket : %s - Created : %s", *bucket.Name, bucket.CreationDate.Format("2006-01-02 15:04:05.000"))
 					logChannel <- bucketData
 					bucketNames += "\n" + bucketData
+					numShownBucket++
 				}
 			}
-			action.Message = fmt.Sprintf("List of S3 Buckets :  %s", bucketNames)
+			logChannel <- fmt.Sprintf("Number of buckets: %v", numShownBucket)
+			if numShownBucket == 0 {
+				logChannel <- "No Bucket found in S3 ..."
+				action.Message = "S3 does not contain buckets with selected criteria!!"
+			} else {
+				action.Message = fmt.Sprintf("\nList of S3 Buckets :  %s", bucketNames)
+			}
 		} else  {
 			logChannel <- "No Bucket found in S3 ..."
 			action.Message = "S3 does not contain buckets!!"
