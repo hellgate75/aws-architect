@@ -21,6 +21,10 @@ func (p *S3CreateBucket) Execute(action *abstract.ActionImpl, arguments []interf
 	var s3Cors string = fmt.Sprintf("%v", arguments[4])
 	var iamRole string = fmt.Sprintf("%v", arguments[5])
 	//var s3WebSite string = fmt.Sprintf("%v", arguments[5])
+	var accessId string = fmt.Sprintf("%v", arguments[6])
+	var accessKey string = fmt.Sprintf("%v", arguments[7])
+	var accessToken string = fmt.Sprintf("%v", arguments[8])
+
 	defer func() {
 		// recover from panic caused by writing to a closed channel
 		if r := recover(); r != nil {
@@ -29,7 +33,17 @@ func (p *S3CreateBucket) Execute(action *abstract.ActionImpl, arguments []interf
 	action.InProgress = true
 	session := awslet.CreateSession()
 	var awsService *s3.S3
-	if iamRole == "" {
+	var credErr error
+	if accessId != "" && accessKey != "" {
+		awsService, credErr = awslet.CreateS3ServiceWithCredentials(session, awslet.DEFAULT_AWS_REGION, accessId, accessKey, accessToken)
+		if credErr != nil {
+			logChannel <- credErr.Error()
+			action.Message = fmt.Sprintf("Credential Error for ID :  %s connectiong to S3 Service : %s", accessId, credErr.Error())
+			action.Success = false
+			action.InProgress = false
+			return false
+		}
+	} else if iamRole == "" {
 		awsService = awslet.CreateS3Service(session, awsRegion)
 	} else {
 		awsService = awslet.CreateS3ServiceAssumeRole(session, awsRegion, iamRole)
@@ -56,13 +70,16 @@ func (p *S3CreateBucket) Execute(action *abstract.ActionImpl, arguments []interf
 }
 
 type S3CreateBucketParser struct {
-	BucketName string
-	Region     string
-	ACL        string
-	Versioning string
-	WebSite    string
-	CORs       string
-	UseRole    string
+	BucketName 		string
+	Region     		string
+	ACL        		string
+	Versioning 		string
+	WebSite    		string
+	CORs       		string
+	UseRole    		string
+	AccessId			string
+	AccessKey			string
+	AccessToken		string
 }
 
 func (p *S3CreateBucketParser) Validate() bool {
@@ -73,6 +90,9 @@ func (p *S3CreateBucketParser) Validate() bool {
 	flag.StringVar(&p.Versioning, "versioning", "disabled", "Amazon Web Services S3 Versioning (default : disabled)")
 	flag.StringVar(&p.UseRole, "use-role", "", "Amazon Web Services IAM Role for action (default : \"\")")
 	//flag.StringVar(&p.WebSite, "static-website", "", "Amazon Web Service reference Region")
+	flag.StringVar(&p.AccessId, "aws-access-id", "", "Amazon Web Services Access Id (default: )")
+	flag.StringVar(&p.AccessKey, "aws-access-key", "", "Amazon Web Services Access Key (default: )")
+	flag.StringVar(&p.AccessToken, "aws-access-token", "", "Amazon Web Services Access Token (default: )")
 	flag.Parse()
 	return p.BucketName != ""
 }
@@ -86,6 +106,9 @@ func (p *S3CreateBucketParser) Parse() []interface{} {
 	arguments = append(arguments, p.CORs)
 	arguments = append(arguments, p.UseRole)
 	//arguments = append(arguments, p.WebSite)
+	arguments = append(arguments, p.AccessId)
+	arguments = append(arguments, p.AccessKey)
+	arguments = append(arguments, p.AccessToken)
 	return arguments
 }
 

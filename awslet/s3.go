@@ -8,6 +8,10 @@ import (
 	"github.com/hellgate75/aws-architect/log"
 	"os"
 	"time"
+	"strings"
+	"errors"
+	"net/http"
+	"bytes"
 )
 
 var logger log.Logger = log.Logger{}
@@ -155,4 +159,47 @@ func ListBuckets(service *s3.S3) ([]*s3.Bucket, error) {
 		return make([]*s3.Bucket, 0), err
 	}
 	return output.Buckets, err
+}
+
+func BucketUpload(service *s3.S3, bucketName string, acl string, fileName string, keyName string, storageClass string, multipart bool) (bool, error) {
+	if storageClass == "" || ! strings.Contains(STORAGE_TYPE_STRING, strings.ToUpper(storageClass+" ")) {
+		return false, errors.New("Storage type '"+storageClass+"' is not valid.")
+	}
+	if acl == "" || ! strings.Contains(ACL_TYPE_STRING, strings.ToLower(acl+" ")) {
+		return false, errors.New("Acl '"+acl+"' is not valid.")
+	}
+	_, err := os.Stat(fileName)
+	if err != nil {
+		return false, err
+	}
+
+	file, err := os.Open(fileName)
+	if err != nil {
+		return false, err
+	}
+
+	defer file.Close()
+
+	stat, _ := file.Stat()
+	size := stat.Size()
+	buffer := make([]byte, size)
+
+	file.Read(buffer)
+	fileBytes := bytes.NewReader(buffer)
+	fileType := http.DetectContentType(buffer)
+
+	output, err := service.PutObject(&s3.PutObjectInput {
+		Bucket: aws.String(bucketName),
+		ACL: aws.String(strings.ToLower(acl)),
+		Key: aws.String(keyName),
+		Body: fileBytes,
+		StorageClass: aws.String(strings.ToUpper(storageClass)),
+		ContentLength: aws.Int64(size),
+		ContentType: aws.String(fileType),
+	})
+	if err != nil {
+		return false, err
+	}
+	logger.Log(fmt.Sprintf("Bucket Name: %s\nUploaded File Location : %s", bucketName, output.String()))
+	return true, err
 }

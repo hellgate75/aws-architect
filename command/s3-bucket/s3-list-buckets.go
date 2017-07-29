@@ -15,6 +15,10 @@ type S3ListBuckets struct {
 
 func (p *S3ListBuckets) Execute(action *abstract.ActionImpl, arguments []interface{}, logChannel chan string) bool {
 	var filter string = fmt.Sprintf("%v", arguments[0])
+	var accessId string = fmt.Sprintf("%v", arguments[1])
+	var accessKey string = fmt.Sprintf("%v", arguments[2])
+	var accessToken string = fmt.Sprintf("%v", arguments[3])
+
 	defer func() {
 		// recover from panic caused by writing to a closed channel
 		if r := recover(); r != nil {
@@ -22,7 +26,20 @@ func (p *S3ListBuckets) Execute(action *abstract.ActionImpl, arguments []interfa
 	}()
 	action.InProgress = true
 	session := awslet.CreateSession()
-	var awsService *s3.S3 = awslet.CreateS3Service(session, awslet.DEFAULT_AWS_REGION)
+	var awsService *s3.S3
+	var credErr error
+	if accessId != "" && accessKey != "" {
+		awsService, credErr = awslet.CreateS3ServiceWithCredentials(session, awslet.DEFAULT_AWS_REGION, accessId, accessKey, accessToken)
+		if credErr != nil {
+			logChannel <- credErr.Error()
+			action.Message = fmt.Sprintf("Credential Error for ID :  %s connectiong to S3 Service : %s", accessId, credErr.Error())
+			action.Success = false
+			action.InProgress = false
+			return false
+		}
+	} else {
+		awsService = awslet.CreateS3Service(session, awslet.DEFAULT_AWS_REGION)
+	}
 	logChannel <- "List of all Buckets :"
 	if filter != "" {
 		logChannel <- fmt.Sprintf("Regular Expression : %s", filter)
@@ -70,12 +87,18 @@ func (p *S3ListBuckets) Execute(action *abstract.ActionImpl, arguments []interfa
 }
 
 type S3ListBucketsParser struct {
-	Region     string
-	Filter		 string
+	Region     		string
+	Filter		 		string
+	AccessId			string
+	AccessKey			string
+	AccessToken		string
 }
 
 func (p *S3ListBucketsParser) Validate() bool {
 	flag.StringVar(&p.Filter, "filter", command.DEFAULT_AWS_REGION, "Bucket name regular expression filter string (default : )")
+	flag.StringVar(&p.AccessId, "aws-access-id", "", "Amazon Web Services Access Id (default: )")
+	flag.StringVar(&p.AccessKey, "aws-access-key", "", "Amazon Web Services Access Key (default: )")
+	flag.StringVar(&p.AccessToken, "aws-access-token", "", "Amazon Web Services Access Token (default: )")
 	flag.Parse()
 	return true
 }
@@ -83,5 +106,8 @@ func (p *S3ListBucketsParser) Validate() bool {
 func (p *S3ListBucketsParser) Parse() []interface{} {
 	var arguments []interface{} = make([]interface{}, 0)
 	arguments = append(arguments, p.Filter)
+	arguments = append(arguments, p.AccessId)
+	arguments = append(arguments, p.AccessKey)
+	arguments = append(arguments, p.AccessToken)
 	return arguments
 }
