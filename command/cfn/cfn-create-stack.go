@@ -1,4 +1,4 @@
-package cnf
+package cfn
 
 import (
 	"github.com/hellgate75/aws-architect/abstract"
@@ -94,8 +94,8 @@ type CreateStackParser struct {
 
 func (p *CreateStackParser) Validate() bool {
 	var notificationArnString, resourceTypesString, parametersString, tagsString string
-	flag.StringVar(&p.StackName, "bucket", "", "Amazon Web Services CloudFormation Stack Name")
-	flag.StringVar(&p.Region, "region", command.DefaultAWSRegion, "Amazon Web Service reference Region (default : "+command.DefaultAWSRegion+")")
+	flag.StringVar(&p.StackName, "stack-name", "", "Amazon Web Services CloudFormation Stack Name")
+	flag.StringVar(&p.Region, "region", command.DEFAULT_AWS_REGION, "Amazon Web Service reference Region (default : "+command.DEFAULT_AWS_REGION+")")
 	flag.StringVar(&p.CfnRemoteUrl, "cfn-url", "", "Amazon Web Services CloudFormation file URL (default : \"\")")
 	flag.StringVar(&p.CfnFilePath, "cfn-path", "", "Amazon Web Services CloudFormation local file Path (default : \"\")")
 	flag.StringVar(&p.PolicyUrl, "policy-url", "", "Amazon Web Services Policy Document URL (default : \"\")")
