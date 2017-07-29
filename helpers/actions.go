@@ -3,7 +3,7 @@ package helpers
 import (
 	"fmt"
 	"github.com/hellgate75/aws-architect/abstract"
-	"strings"
+	"github.com/hellgate75/aws-architect/util"
 )
 
 func calculateMaxParametersLength(parameters []abstract.Parameter) (int) {
@@ -18,14 +18,6 @@ func calculateMaxParametersLength(parameters []abstract.Parameter) (int) {
 	return  length
 }
 
-func StringLPad(value string, pad int) (string) {
-	var newValue string = value
-	if pad > len(value) {
-		newValue += strings.Repeat(" ", pad - len(value))
-	}
-	return  newValue
-}
-
 
 func DefineUsage(command string, description string, parameters []abstract.Parameter) string {
 	var usage, args string
@@ -34,7 +26,7 @@ func DefineUsage(command string, description string, parameters []abstract.Param
 	for i := 0; i < len(parameters); i++ {
 		param := parameters[i]
 		var argument string = fmt.Sprintf("-%s %s", param.Name, param.SampleValue)
-		var boundedArgument string = StringLPad(argument, maxLen)
+		var boundedArgument string = util.StringRPad(argument, maxLen)
 		if param.Mandatory {
 			usage += argument + " "
 			args += fmt.Sprintf("%s    [Mandatory] %s\n", boundedArgument, param.Description)

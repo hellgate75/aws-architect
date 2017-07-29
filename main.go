@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"github.com/hellgate75/aws-architect/util"
 )
 
 var currentAction abstract.ActionOps
@@ -36,9 +37,17 @@ func PrintUsage(command string) {
 		println("aws-architect <command> parameters ...")
 		println("Type command : help <commnand> to receive more information")
 		println("Available commands : ")
+		var maxLen int = 0
 		for i := 0; i < size; i++ {
 			var ops abstract.ActionOps = abstract.ActiveActionRegistry.ElementAt(i)
-			println("\t", ops.GetCommand(), "\t", ops.GetName())
+			if len(ops.GetCommand()) > maxLen {
+				maxLen = len(ops.GetCommand())
+			}
+		}
+
+			for i := 0; i < size; i++ {
+			var ops abstract.ActionOps = abstract.ActiveActionRegistry.ElementAt(i)
+			println("\t", util.StringRPad(ops.GetCommand(), maxLen), "    ", ops.GetName())
 		}
 	}
 }
