@@ -45,7 +45,7 @@ func ParseTags(tagsString string) [][]string {
 }
 
 func TagsHelper() string {
-	return "key1=value1/|...|keyN=valueN,\n" +
+	return "key1=value1|...|keyN=valueN,\n" +
 		"where key and value represent tag, and key-value couple fo values are separated by other ones by \"|\" character.\n" +
 		"In the command line this group should be bounded by quote marks (\")"
 }
@@ -158,6 +158,6 @@ func ParseNotificationArns(notificationArnString string) []*string {
 
 func NotificationArnsHelper() string {
 	return "NotificationArn1,NotificationArn2,...,NotificationArnN\n" +
-		"where NotificationArn items are comma separated, and are reference to notification topics\n" +
+		"where NotificationArn items are comma separated, and must reference to notification topics ARN\n" +
 		"In the command line this group should be bounded by quote marks (\")"
 }
