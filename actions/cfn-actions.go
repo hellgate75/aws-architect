@@ -2,9 +2,9 @@ package actions
 
 import (
 	"github.com/hellgate75/aws-architect/abstract"
-	"github.com/hellgate75/aws-architect/helpers"
 	"github.com/hellgate75/aws-architect/awslet"
 	"github.com/hellgate75/aws-architect/command/cfn"
+	"github.com/hellgate75/aws-architect/helpers"
 )
 
 func InitCreateCfnStack() {
@@ -14,7 +14,7 @@ func InitCreateCfnStack() {
 		Description: "Amazon Web Services CloudFormation Stack Name",
 		Mandatory:   true,
 		HasValue:    true,
-		SampleValue: "bucket-name",
+		SampleValue: "stack-name",
 	}
 	var parm2 abstract.Parameter = abstract.Parameter{
 		Name:        "region",
