@@ -16,9 +16,9 @@ install:
  - go get -u github.com/golang/go/src/cmd/gofmt
 
 script:
+ - dep ensure -update -v
  - go vet .
  - go fmt .
  - gofmt -e -s -w .
- - dep ensure -update -v
  - travis_wait 20 go test -p 10 -timeout 20m -v -cover -covermode atomic ./test/...
  - go build -buildmode exe -pkgdir ./vendor .
