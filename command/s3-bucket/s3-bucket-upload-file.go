@@ -1,12 +1,12 @@
 package s3_bucket
 
 import (
-"github.com/hellgate75/aws-architect/awslet"
-"fmt"
-"flag"
-"github.com/hellgate75/aws-architect/command"
-"github.com/hellgate75/aws-architect/abstract"
-"github.com/aws/aws-sdk-go/service/s3"
+	"flag"
+	"fmt"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/hellgate75/aws-architect/abstract"
+	"github.com/hellgate75/aws-architect/awslet"
+	"github.com/hellgate75/aws-architect/command"
 	"time"
 )
 
@@ -50,21 +50,21 @@ func (p *S3BucketUpload) Execute(action *abstract.ActionImpl, arguments []interf
 		awsService = awslet.CreateS3ServiceAssumeRole(session, awsRegion, iamRole)
 	}
 	logChannel <- fmt.Sprintf("S3 Bucket : %s", bucketName)
-	time.Sleep(200*time.Microsecond)
+	time.Sleep(200 * time.Microsecond)
 	logChannel <- fmt.Sprintf("S3 Bucket Region : %s", awsRegion)
-	time.Sleep(200*time.Microsecond)
+	time.Sleep(200 * time.Microsecond)
 	logChannel <- fmt.Sprintf("Key Name : %s", keyName)
-	time.Sleep(200*time.Microsecond)
+	time.Sleep(200 * time.Microsecond)
 	logChannel <- fmt.Sprintf("Local File : %s", filePath)
-	time.Sleep(200*time.Microsecond)
+	time.Sleep(200 * time.Microsecond)
 	logChannel <- fmt.Sprintf("ACL : %s", acl)
-	time.Sleep(200*time.Microsecond)
+	time.Sleep(200 * time.Microsecond)
 	logChannel <- fmt.Sprintf("Storage Class : %s", storageClass)
-	time.Sleep(200*time.Microsecond)
+	time.Sleep(200 * time.Microsecond)
 	logChannel <- fmt.Sprintf("Is Multipart : %t", multipart)
 	var exists bool
 	var err error
-	exists, err = awslet.BucketUpload(awsService, awsRegion, acl, filePath, keyName, storageClass, multipart )
+	exists, err = awslet.BucketUpload(awsService, awsRegion, acl, filePath, keyName, storageClass, multipart)
 	if err == nil {
 		logChannel <- fmt.Sprintf("Bucket key '%s' with file Upload '%s' uploaded : %s", keyName, filePath, exists)
 		action.Message = fmt.Sprintf("Upload file %s in S3 Bucket %s in Region %s : %t!!", keyName, bucketName, awsRegion, exists)
@@ -80,17 +80,17 @@ func (p *S3BucketUpload) Execute(action *abstract.ActionImpl, arguments []interf
 }
 
 type S3BucketUploadParser struct {
-	BucketName 		string
-	Region     		string
-	UseRole				string
-	KeyName    		string
-	FilePath   		string
-	Acl	   		 		string
-	StorageClass	string
-	Multipart		 	bool
-	AccessId			string
-	AccessKey			string
-	AccessToken		string
+	BucketName   string
+	Region       string
+	UseRole      string
+	KeyName      string
+	FilePath     string
+	Acl          string
+	StorageClass string
+	Multipart    bool
+	AccessId     string
+	AccessKey    string
+	AccessToken  string
 }
 
 func (p *S3BucketUploadParser) Validate() bool {
@@ -100,8 +100,8 @@ func (p *S3BucketUploadParser) Validate() bool {
 	flag.StringVar(&p.KeyName, "key", "", "Amazon Web Services S3 Bucket Key name (default : )")
 	flag.StringVar(&p.FilePath, "file", "", "Full qualified file path to upload (default : )")
 	//var aclCtrlVals string = "READ WRITE READ_ACP WRITE_ACP FULL_CONTROL"
-	flag.StringVar(&p.Acl, "acl", command.DEFAULT_ACL_TYPE, "Amazon Web Services S3 Bucket Object Acl (Available Values : " + command.ACL_TYPE_STRING + " - default: "+command.DEFAULT_ACL_TYPE+")")
-	flag.StringVar(&p.StorageClass, "storage-class", command.DEFAULT_STORAGE_TYPE, "Amazon Web Services S3 Storage Class (Available Values: " + command.STORAGE_TYPE_STRING + " default: "+command.DEFAULT_STORAGE_TYPE+")")
+	flag.StringVar(&p.Acl, "acl", command.DEFAULT_ACL_TYPE, "Amazon Web Services S3 Bucket Object Acl (Available Values : "+command.ACL_TYPE_STRING+" - default: "+command.DEFAULT_ACL_TYPE+")")
+	flag.StringVar(&p.StorageClass, "storage-class", command.DEFAULT_STORAGE_TYPE, "Amazon Web Services S3 Storage Class (Available Values: "+command.STORAGE_TYPE_STRING+" default: "+command.DEFAULT_STORAGE_TYPE+")")
 	flag.StringVar(&p.AccessId, "aws-access-id", "", "Amazon Web Services Access Id (default: )")
 	flag.StringVar(&p.AccessKey, "aws-access-key", "", "Amazon Web Services Access Key (default: )")
 	flag.StringVar(&p.AccessToken, "aws-access-token", "", "Amazon Web Services Access Token (default: )")
@@ -124,4 +124,3 @@ func (p *S3BucketUploadParser) Parse() []interface{} {
 	arguments = append(arguments, p.AccessToken)
 	return arguments
 }
-

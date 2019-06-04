@@ -25,6 +25,6 @@ type PluginOps interface {
 	Load() (plugin.Plugin, error)
 }
 
-func (s *PluginSelector) Load() (plugin.Plugin, error) {
+func (s *PluginSelector) Load() (*plugin.Plugin, error) {
 	return plugin.Open(s.PluginFile)
 }
